@@ -24,8 +24,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $hand = new Hand('7D 2S 5D 3S AC');
-        $hand->normalize();
+        $hand1 = new Hand('TS JS KS QS AS');
+        $hand2 = new Hand('3H 4H 4S 4C 5D');
+        $hand1->normalize();
+        $hand2->normalize();
+        echo Hand::compareHands($hand1, $hand2);
+        // exit;
         // echo "<pre>"; print_r($hand->getCards()); exit;
         return view('home');
     }
