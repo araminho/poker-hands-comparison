@@ -11,7 +11,7 @@
                     Each hand consists of 5 cards, separated by space, for example: <b>8C TS KC 9H 4S</b>.
                 </p>
                 <p>
-                    The following program will compare two poker hands to find the winner..
+                    The following program will compare two poker hands to find the winner.
                 </p>
             </div>
         </div>
@@ -32,9 +32,18 @@
     <div class="container">
         <h3>Mass upload</h3>
         <div class="row col-md-12">
-            <p>You can also upload a file with results, where each line should contain the hands of both player 1 and player 2,
-                separated by space. For example: <b>8C TS KC 9H 4S 7D 2S 5D 3S AC</b></p>
-            <input type="file" class="">
+            <p>You can also upload a text file with results, where each line should contain the hands of both player 1
+                and player 2, separated by space. For example: <b>8C TS KC 9H 4S 7D 2S 5D 3S AC</b>.</p>
+            <form method="post" action="{{ route('upload') }}" enctype="multipart/form-data">
+                @csrf
+                <div class="form-group">
+                    <input type="file" name="file" accept=".txt" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+
         </div>
     </div>
 @endsection

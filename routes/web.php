@@ -20,3 +20,6 @@ Auth::routes();
 Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/compare', 'HomeController@compare');
+Route::post('/upload', 'HomeController@upload')->name('upload');
+Route::get('/results', 'HomeController@results')->name('results');
+Route::get('/clear', 'HomeController@clear')->name('clear');
