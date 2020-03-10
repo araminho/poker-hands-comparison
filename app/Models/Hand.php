@@ -35,10 +35,10 @@ class Hand
         return $this->cards;
     }
 
-    // Sort the hand by descending order
+    // Sort the hand by descending order using Bubble sort
     public function normalize()
     {
-        $normalized = $this->cards;
+        $normalized = $this->getCards();
         for ($i = 0; $i < 4; $i++) {
             for ($j = 0; $j < 4 - $i; $j++) {
                 if ($normalized[$j + 1]->getValue() > $normalized[$j]->getValue()) {
@@ -65,14 +65,16 @@ class Hand
     public function isFourOfAKind()
     {
         $cards = $this->getCards();
-        // First four cards or last four cards are the same
+        // First four are equal
         if ($cards[0]->getValue() == $cards[1]->getValue() &&
             $cards[1]->getValue() == $cards[2]->getValue() &&
             $cards[2]->getValue() == $cards[3]->getValue()
         ) {
             $this->high1 = $cards[0]->getValue();
             return true;
-        } else if ($cards[1]->getValue() == $cards[2]->getValue() &&
+        }
+        // Last four cards are equal
+        else if ($cards[1]->getValue() == $cards[2]->getValue() &&
             $cards[2]->getValue() == $cards[3]->getValue() &&
             $cards[3]->getValue() == $cards[4]->getValue()) {
             $this->high1 = $cards[1]->getValue();
@@ -84,7 +86,7 @@ class Hand
     public function isFullHouse()
     {
         $cards = $this->getCards();
-        // First three and last two are the same or vice-versa
+        // First three and last two are equal or vice-versa
         if ($cards[0]->getValue() == $cards[1]->getValue() &&
             $cards[1]->getValue() == $cards[2]->getValue() &&
             $cards[3]->getValue() == $cards[4]->getValue()
@@ -234,42 +236,48 @@ class Hand
 
     public function getWinningHandPriority()
     {
+        $this->normalize();
         if ($this->isRoyalFlush()) {
-            echo "Royal flush! <br/>";
+//            echo "Royal flush! <br/>";
             return 1;
         } else if ($this->isStraightFlush()) {
-            echo "Straight flush! <br/>";
+//            echo "Straight flush! <br/>";
             return 2;
         } else if ($this->isFourOfAKind()) {
-            echo "Four of a kind! <br/>";
+//            echo "Four of a kind! <br/>";
             return 3;
         } else if ($this->isFullHouse()) {
-            echo "Full house! <br/>";
+//            echo "Full house! <br/>";
             return 4;
         } else if ($this->isFlush()) {
-            echo "Flush! <br/>";
+//            echo "Flush! <br/>";
             return 5;
         } else if ($this->isStraight()) {
-            echo "Straight! <br/>";
+//            echo "Straight! <br/>";
             return 6;
         } else if ($this->isThreeOfAKind()) {
-            echo "Three of a kind! <br/>";
+//            echo "Three of a kind! <br/>";
             return 7;
         } else if ($this->isTwoPairs()) {
-            echo "Two pairs! <br/>";
+//            echo "Two pairs! <br/>";
             return 8;
         } else if ($this->isOnePair()) {
-            echo "One pair of $this->high1! <br/>";
+//            echo "One pair of $this->high1! <br/>";
             return 9;
         } else {
-            $this->allAreDifferent();       // set highest cards
-            $valuesToNominals = array_flip(Card::$values);
+            $this->allAreDifferent();       // set high1, high2, ... properties
+            /*$valuesToNominals = array_flip(Card::$values);
             $nominal = $valuesToNominals[$this->high1];
-            echo "All are different. Highest is $nominal <br/>";
+            echo "All are different. Highest is $nominal <br/>";*/
             return 10;
         }
     }
 
+
+    public function isValid()
+    {
+        return count($this->getCards()) == 5;
+    }
 
     /**
      * Returns 1 if hand1 wins, 2 if hand2 wins, and 0 if it's draw
@@ -279,14 +287,19 @@ class Hand
      */
     public static function compareHands($hand1, $hand2)
     {
+        if (!$hand1->isValid() || !$hand2->isValid()){
+            return -1;
+        }
         $p1 = $hand1->getWinningHandPriority();
         $p2 = $hand2->getWinningHandPriority();
+        // Winning hands are different
         if ($p1 < $p2) {
             return 1;
         } else if ($p1 > $p2) {
             return 2;
         }
 
+        // Winning hands are the same, need to compare highest cards
         if ($hand1->high1 > $hand2->high1) {
             return 1;
         } else if ($hand1->high1 < $hand2->high1) {

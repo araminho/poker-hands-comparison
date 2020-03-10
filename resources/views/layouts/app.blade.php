@@ -90,5 +90,8 @@
             @yield('content')
         </main>
     </div>
+    @auth
+        <script src="/js/script.js?v=<?=filemtime($_SERVER['DOCUMENT_ROOT'] . '/js/script.js')?>"></script>
+    @endauth
 </body>
 </html>
