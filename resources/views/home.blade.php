@@ -25,7 +25,7 @@
             <label for="player2">Player 2</label>
             <input id="player2" class="form-control" placeholder="For example: 7D 2S 5D 3S AC"/>
         </div>
-        <button type="button" class="btn btn-primary" onclick="compare()">Compare</button>
+        <button type="button" class="btn btn-success" onclick="compare()">Compare</button>
     </div>
 
     <br/>
@@ -40,7 +40,7 @@
                     <input type="file" name="file" accept=".txt" required>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-success">Submit</button>
                 </div>
             </form>
 
