@@ -4,9 +4,9 @@ A simple tool to compare poker hands and find out the winner. Created with Larav
 Here are the steps you need to do for making this project work.
 
 1. Clone the repository
-2. Create a virtual host that follows `/public` folder
+2. Create a virtual host that follows `/public` folder or run `php -S localhost:8081 -t ./public`
 3. Run`composer update`
-4. Create a database
+4. Create a mysql database
 5. Create an `.env` file, copying from `.env.example`
 6. Change values for DB connection
 7. Run `php artisan key:generate`
